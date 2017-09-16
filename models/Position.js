@@ -1,6 +1,7 @@
 class Position {
 
-	constructor() {
-		
+	constructor(id) {
+		// Unique identifier
+		this.id = id;
 	}
 }

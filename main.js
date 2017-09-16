@@ -1,27 +1,82 @@
-function initCanvas() {
-	// Global shape width and height based on canvas size
+function init() {
+
+	// Build data model, pass to view
+
+	var stage = new createjs.Stage("gridiron");
+
+	var width = 1000;
+	var height = 500;
+
+	var field = new FieldView(stage);
 
 	// List of Positions and their relative (to a 2:1 viewport) locations 
 	// retrieved from server, agnostic to Players and PositionGroups
-	var alignment = new Map([
-		[0,{x:.5,y:.5}], 	// C
-		[1,{x:.33,y:.5}], 	// LT
-		[2,{x:.67,y:.5}], 	// RT
-		[3,{x:.415,y:.5}], 	// LG
-		[4,{x:.585,y:.5}],  // RG
-		[5,{x:.755,y:.6}],  // TE
-		[6,{x:.5,y:.8}], 	// QB
-		[7,{x:.415,y:.65}], // RB
-		[8,{x:.1,y:.5}], 	// WR
-		[9,{x:.2,y:.6}], 	// WR
-		[10,{x:.9,y:.5}]	// WR
-	]);
+	// Position locations should belong in Alignment, not Position.
 
-	var canvasElement = document.getElementById("gridiron");
-	if (canvasElement.getContext) { // if is valid canvas element
-		var canvas = new CanvasView(canvasElement);
-		canvas.backgroundColor = "green";
-		canvas.alignment = alignment;
-		canvas.draw();
+	// X and Y are relative (fractional) coordinates
+	var locations = [
+		{id: 0, x: .5, y: .5},		// C
+		{id: 1, x: .33, y: .5},		// LT
+		{id: 2, x: .67, y: .5},		// RT
+		{id: 3, x: .415, y: .5},	// LG
+		{id: 4, x: .585, y: .5},	// RG
+		{id: 5, x: .755, y: .5},	// TE
+		{id: 6, x: .5, y: .8},		// QB
+		{id: 7, x: .415, y: .65},	// RB
+		{id: 8, x: .1, y: .5},		// WR
+		{id: 9, x: .2, y: .6},		// WR
+		{id: 10, x: .9, y: .5}		// WR
+	];
+
+	var positions = [
+		new Position(0),
+		new Position(1),
+		new Position(2),
+		new Position(3),
+		new Position(4),
+		new Position(5),
+		new Position(6),
+		new Position(7),
+		new Position(8),
+		new Position(9),
+		new Position(10)
+	];
+
+	var alignmentModel = new Alignment();
+	alignmentModel.type = "offense";
+	alignmentModel.positions = new Map();
+	// Sloppy?
+	for (var i in positions) {
+		for (var j in locations) {
+			if (positions[i].id == locations[j].id) {
+				alignmentModel.positions.set(
+					positions[i].id, 
+					{
+						position: positions[i],
+						x: locations[j].x,
+						y: locations[j].y
+					}
+				);
+			}
+		}
 	}
+
+	var alignment = new AlignmentView(alignmentModel, stage);
+
+	alignment.draw();
+
+	stage.update();
+
+	/* 
+	Can I do this without creating a new Graphics object for every Shape?
+
+	//O drawing blueprint
+	var o_g = new createjs.Graphics();
+	o_g.append(createjs.Graphics.beginCmd);
+	o_g.beginStroke("#ffffff");
+	o_g.drawCircle(0, 0, 50);
+
+	// X drawing blueprint
+	var x_g = new createjs.Graphics();
+	*/
 }

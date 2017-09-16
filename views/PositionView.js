@@ -1,20 +1,21 @@
-class PlayerView {
+class PositionView {
 
-	constructor(shape, centerX, centerY, diameter, color) {
-		this.shape = shape || "O";
-		this.diameter = diameter || 100;
-		this.centerX = centerX || this.diameter/2;
-		this.centerY = centerY || this.diameter/2;
-		this.color = color || "#ffffff";
+	constructor(position) {
+		this.shape = position.type;
+		this.diameter = 50;
+		this.centerX = position.x;
+		this.centerY = position.y;
+		this.color = "#ffffff";
 		this.scalingFactor = 0.2; // Scaling factor from shape diameter to stroke width
-
-		this.path = new Path2D();
 	}
 
 	draw(context) {
 		if (this.shape == "O") {
+			// OFFENSE
+
 			this.path.arc(this.centerX, this.centerY, this.diameter/2, 0, Math.PI*2);
 		} else if (this.shape == "X") {
+			// DEFENS
 			this.path.moveTo(this.centerX - (this.diameter/2), this.centerY - (this.diameter/2));
 			this.path.lineTo(this.centerX + (this.diameter/2), this.centerY + (this.diameter/2));
 			this.path.moveTo(this.centerX - (this.diameter/2), this.centerY + (this.diameter/2));
