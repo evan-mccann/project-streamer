@@ -1,11 +1,15 @@
+var ds = {
+	width: 1000,
+	height: 500,
+	scalingFactor: .2, // Width of lines relative to diameter of shapes
+	shapeDiameter: 60
+};
+
 function init() {
 
 	// Build data model, pass to view
 
 	var stage = new createjs.Stage("gridiron");
-
-	var width = 1000;
-	var height = 500;
 
 	var field = new FieldView(stage);
 
@@ -43,7 +47,7 @@ function init() {
 	];
 
 	var alignmentModel = new Alignment();
-	alignmentModel.type = "offense";
+	alignmentModel.type = "defense";
 	alignmentModel.positions = new Map();
 	// Sloppy?
 	for (var i in positions) {
