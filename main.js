@@ -10,6 +10,7 @@ function init() {
 	// Build data model, pass to view
 
 	var stage = new createjs.Stage("gridiron");
+	stage.enableMouseOver(20);
 
 	var field = new FieldView(stage);
 
@@ -47,7 +48,7 @@ function init() {
 	];
 
 	var alignmentModel = new Alignment();
-	alignmentModel.type = "offense";
+	alignmentModel.type = "defense";
 	alignmentModel.positions = new Map();
 	// Sloppy?
 	for (var i in positions) {
@@ -70,17 +71,4 @@ function init() {
 	alignment.draw();
 
 	stage.update();
-
-	/* 
-	Can I do this without creating a new Graphics object for every Shape?
-
-	//O drawing blueprint
-	var o_g = new createjs.Graphics();
-	o_g.append(createjs.Graphics.beginCmd);
-	o_g.beginStroke("#ffffff");
-	o_g.drawCircle(0, 0, 50);
-
-	// X drawing blueprint
-	var x_g = new createjs.Graphics();
-	*/
 }
