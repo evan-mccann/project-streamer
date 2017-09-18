@@ -1,29 +1,33 @@
 class PositionView {
 
-	constructor(position) {
-		this.shape = position.type;
-		this.diameter = 50;
-		this.centerX = position.x;
-		this.centerY = position.y;
-		this.color = "#ffffff";
-		this.scalingFactor = 0.2; // Scaling factor from shape diameter to stroke width
+	constructor(model, stage, graphics) {
+		this.model = model;
+		this.stage = stage;
+		this.graphics = graphics || new createjs.Graphics();
 	}
 
-	draw(context) {
-		if (this.shape == "O") {
-			// OFFENSE
+	draw(x, y) {
+		// Add hitbox so you don't have to click/mouseover an exact shape pixel to get response behavior
+		// CLEAR OLD SHAPES AND BOUND EVENTS ON REDRAW
+		
+		var container = new createjs.Container();
 
-			this.path.arc(this.centerX, this.centerY, this.diameter/2, 0, Math.PI*2);
-		} else if (this.shape == "X") {
-			// DEFENS
-			this.path.moveTo(this.centerX - (this.diameter/2), this.centerY - (this.diameter/2));
-			this.path.lineTo(this.centerX + (this.diameter/2), this.centerY + (this.diameter/2));
-			this.path.moveTo(this.centerX - (this.diameter/2), this.centerY + (this.diameter/2));
-			this.path.lineTo(this.centerX + (this.diameter/2), this.centerY - (this.diameter/2));
-		}
-		context.strokeStyle = this.color;
-		context.lineWidth = this.diameter * this.scalingFactor;
-		context.lineCap = "round";
-		context.stroke(this.path);
+		var shape = new createjs.Shape(this.graphics);
+
+		container.addChild(shape);
+		container.x = x;
+		container.y = y;
+
+		container.on("pressmove", function(e) {
+			e.currentTarget.x = e.stageX;
+			e.currentTarget.y = e.stageY;
+			this.stage.update();
+		});
+
+		container.on("pressup", function(e) {
+			// Update location value in data model
+		});
+
+		this.stage.addChild(container);
 	}
 }

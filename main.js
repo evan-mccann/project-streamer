@@ -47,7 +47,7 @@ function init() {
 	];
 
 	var alignmentModel = new Alignment();
-	alignmentModel.type = "defense";
+	alignmentModel.type = "offense";
 	alignmentModel.positions = new Map();
 	// Sloppy?
 	for (var i in positions) {

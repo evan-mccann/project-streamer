@@ -32,28 +32,11 @@ class AlignmentView {
 	}
 
 	draw() {
-		// Currently, foreach position get location in Position
-		// Should be foreach position id get corresponding location in Alignment
-
-		// Possibly, optionally, wrap in Containers
-
-		// CLEAR OLD SHAPES AND BOUND EVENTS ON REDRAW
-
-		// Draw logic just call draw() in PositionViews?
 		for (const position of this.model.positions) {
-			// OFFENSE
-			var shape = new createjs.Shape(this.graphics);
-			// Use a getter here?
-			shape.x = position[1].x * ds.width;
-			shape.y = position[1].y * ds.height;
-
-			shape.on("pressmove", function(e) {
-				e.target.x = e.stageX;
-				e.target.y = e.stageY;
-				this.stage.update();
-			});
-
-			this.stage.addChild(shape);
+			var view = new PositionView(position, this.stage, this.graphics);
+			var x = position[1].x * ds.width;
+			var y = position[1].y * ds.height;
+			view.draw(x, y);
 		}
 	}
-}
+} 
