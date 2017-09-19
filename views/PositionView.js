@@ -12,7 +12,6 @@ class PositionView {
 	}
 
 	draw(x, y) {
-		// Add hitbox so you don't have to click/mouseover an exact shape pixel to get response behavior
 		// CLEAR OLD SHAPES AND BOUND EVENTS ON REDRAW
 
 		var shape = new createjs.Shape(this.shapeGraphics);
@@ -41,7 +40,14 @@ class PositionView {
 		});
 
 		this.container.on("pressup", function(e) {
-			// Update location value in data model
+			this.stage.dispatchEvent(
+				new createjs.Event("positionmoved")
+				.set({
+					id: self.model.id,
+					x: self.stage.mouseX, 
+					y: self.stage.mouseY
+				}), true
+			);
 		});
 
 		this.stage.addChild(this.container);
@@ -62,25 +68,6 @@ class PositionView {
 			this.container.hitArea = new createjs.Shape(this.hitArea);
 
 		} else if (this.type == "defense") {
-
-			/*
-			this.shapeGraphics
-			.clear()
-			.ss(ds.shapeDiameter*ds.scalingFactor, 1)
-			.s(color || "#ffffff")
-			.mt(0, 0)
-			.lt(ds.shapeDiameter/2 * Math.cos(.25 * Math.PI), 
-				ds.shapeDiameter/2 * Math.sin(.25 * Math.PI))
-			.mt(0, 0)
-			.lt(ds.shapeDiameter/2 * Math.sin(.25 * Math.PI), 
-				ds.shapeDiameter/2 * -Math.cos(.25 * Math.PI))
-			.mt(0, 0)
-			.lt(ds.shapeDiameter/2 * -Math.cos(.25 * Math.PI), 
-				ds.shapeDiameter/2 * Math.sin(.25 * Math.PI))
-			.mt(0, 0)
-			.lt(ds.shapeDiameter/2 * -Math.cos(.25 * Math.PI), 
-				ds.shapeDiameter/2 * -Math.sin(.25 * Math.PI));
-			*/
 
 			this.shapeGraphics
 			.clear()
@@ -103,6 +90,13 @@ class PositionView {
 				ds.shapeDiameter + ds.shapeDiameter*ds.scalingFactor, 
 				ds.shapeDiameter + ds.shapeDiameter*ds.scalingFactor);
 			this.container.hitArea = new createjs.Shape(this.hitArea);
+
+			/*
+			.mt(0, 0)
+			.lt(ds.shapeDiameter/2 * Math.cos(.25 * Math.PI), 
+				ds.shapeDiameter/2 * Math.sin(.25 * Math.PI))
+			*/
+
 		} else {
 			//handle
 		}

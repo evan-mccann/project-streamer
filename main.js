@@ -12,6 +12,8 @@ function init() {
 	var stage = new createjs.Stage("gridiron");
 	stage.enableMouseOver(20);
 
+	createjs.EventDispatcher.initialize(AlignmentView.prototype);
+
 	var field = new FieldView(stage);
 
 	// List of Positions and their relative (to a 2:1 viewport) locations 
@@ -48,7 +50,7 @@ function init() {
 	];
 
 	var alignmentModel = new Alignment();
-	alignmentModel.type = "defense";
+	alignmentModel.type = "offense";
 	alignmentModel.positions = new Map();
 	// Sloppy?
 	for (var i in positions) {
