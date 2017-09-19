@@ -33,6 +33,10 @@ class PositionView {
 			self.stage.update();
 		});
 
+		this.container.on("mousedown", function(e) {
+			// Move to "top" so dragging over other shapes does not highlight them
+		});
+
 		this.container.on("pressmove", function(e) {
 			e.currentTarget.x = e.stageX;
 			e.currentTarget.y = e.stageY;
