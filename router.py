@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, json
 from os import path, listdir, walk
 app = Flask(__name__)
+app.config["DEBUG"] = True
 
 @app.route("/", methods=["GET"])
 def pageLoad():
@@ -18,7 +19,7 @@ def autoloadJS():
 			js = js + f.read()
 
 	return js
-	#append and minify
+	# minify
 
 if __name__ == "__main__":
     app.run(host="localhost")
