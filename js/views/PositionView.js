@@ -1,3 +1,7 @@
+/*
+ * View class handling the display logic for a position on a football field (I.e., quarterback),
+ * represented visually by an O (offense) or an X (defense),
+ */
 class PositionView {
 
 	constructor(model, stage, type) {
@@ -12,8 +16,6 @@ class PositionView {
 	}
 
 	draw(x, y) {
-		// CLEAR OLD SHAPES AND BOUND EVENTS ON REDRAW
-
 		var shape = new createjs.Shape(this.shapeGraphics);
 		shape.name = "shape";
 
@@ -59,20 +61,21 @@ class PositionView {
 
 	setShape(color) {
 		if (this.type == "offense") {
-
+			// Define "O" shape
 			this.shapeGraphics
 			.clear()
 			.ss(ds.shapeDiameter*ds.scalingFactor, 1)
 			.s(color || "#ffffff")
 			.dc(0, 0, ds.shapeDiameter/2);
 
+			// Define mouseover hitbox
 			this.hitArea
 			.beginFill("#000000")
 			.drawCircle(0, 0, ds.shapeDiameter/2 + ((ds.shapeDiameter*ds.scalingFactor)/2));
 			this.container.hitArea = new createjs.Shape(this.hitArea);
 
 		} else if (this.type == "defense") {
-
+			// Define "X" shape
 			this.shapeGraphics
 			.clear()
 			.ss(ds.shapeDiameter*ds.scalingFactor, 1)
@@ -86,6 +89,7 @@ class PositionView {
 			.mt(0, 0)
 			.lt(ds.shapeDiameter/2, -ds.shapeDiameter/2);
 			
+			// Define mouseover hitbox
 			this.hitArea
 			.beginFill("#000000")
 			.drawRect(

@@ -1,8 +1,12 @@
-// List of Positions and their relative locations, agnostic to Players and PositionGroups
+/*
+ * Data model defining an alignment of positions on a football field
+ *  - id
+ *  - type ("offense" || "defense")
+ *  - positions (map of position IDs to corresponding relative drawing coordinates)
+ */
 class Alignment {
 	
 	constructor() {
-		// "offense" or "defense"
 		this.type;
 		this.positions;
 	}

@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, json
 from os import path, listdir, walk
 app = Flask(__name__)
+# Enable debug mode
 app.config["DEBUG"] = True
 
+# Initial page load
 @app.route("/", methods=["GET"])
 def pageLoad():
 	return render_template("index.html")
 
+# Get JS for client-side execution
 @app.route("/autoload", methods=["GET"])
 def autoloadJS():
 	homedir = path.dirname(path.realpath(__file__))
